@@ -1,5 +1,6 @@
 #!/bin/bash
 #Script para instalar Zimbra Collaboration 8.6 de manera desatendida
+sudo apt-get update
 sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax perl-5.18.2 sysstat sqlite3
 mkdir /tmp/zcs && cd /tmp/zcs && wget https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 wget https://jorgedelacruz.es/installZimbra10minsDigitalOcean
