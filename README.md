@@ -1,2 +1,2 @@
 # Zimbra
-Zimbra Scripts
+In this Repository you will find different Zimbra Scripts.
