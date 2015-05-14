@@ -50,12 +50,14 @@ imap     IN      A      $2
 imap4     IN      A      $2
 smtp     IN      A      $2
 EOF
+
 sudo service bind9 restart
 echo "Download and install Zimbra Collaboration dependencies"
 sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax sysstat sqlite3
 echo "Creating the Scripts files"
 mkdir /tmp/zcs && cd /tmp/zcs
 touch /tmp/zcs/installZimbraScript
+
 cat <<EOF >/tmp/zcs/installZimbraScript
 AVDOMAIN="$1"
 AVUSER="admin@$1"
@@ -149,6 +151,7 @@ zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
 EOF
+
 touch /tmp/zcs/installZimbra-keystrokes
 cat <<EOF >/tmp/zcs/installZimbra-keystrokes
 y
@@ -164,10 +167,11 @@ y
 y
 y
 EOF
+
 echo "Downloading Zimbra Collaboration 8.6"
 wget https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 tar xzvf zcs-*
-echo "Installing Zimbra Collaboration, just the Software"
+echo "Installing Zimbra Collaboration just the Software"
 cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes
-echo "Installing Zimbra Collaboration, time to inject the configuration"
+echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/installZimbraScript
