@@ -23,13 +23,16 @@ auth-nxdomain no; # conform to RFC1035
 
 };
 EOF
+
 cat <<EOF >>/etc/bind/named.conf.local
 zone "$1" {
         type master;
         file "/etc/bind/db.$1";
 };
 EOF
+
 touch /etc/bind/db.$1
+
 cat <<EOF >/etc/bind/db.$1
 \$TTL  604800
 @      IN      SOA    ns1.$1. root.localhost. (
