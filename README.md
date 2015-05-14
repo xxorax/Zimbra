@@ -11,7 +11,7 @@ This Script install and configures bind9 with the domain and IP that is defined 
  * Easy to use 
  * Good for a quick Zimbra Preview
 
-#Usage and Example
+##Usage and Example
 The the installZimbra&DNS_Server_Single-Server Script is a Script to install Zimbra in a easier way, without be worry of the DNS configuration, etc. Just execute it and after a few minutes have Zimbra up and running.
 
 Just run the Script adding the TLD domain for your Zimbra Collaboration server, the IP of the DNS server (usually will be the same of the server, but instead you are using different eth interfaces), and add the password for the Zimbra Collaboration server. 
@@ -19,6 +19,13 @@ Just run the Script adding the TLD domain for your Zimbra Collaboration server, 
 root@zimbramail:/home/oper# ./installZimbra\&DNS_Server_Single-Server zimbralab.local 192.168.211.40 Zimbra2015
  
 ```
+##Access to the Web Client and Admin Console
 The Script will take care of everything and after a few minutes you can go to the IP of your server and use the next URL:
  * Web Client - https://YOURIP
  * Admin Console - https://YOURIP:7071
+ 
+##Next steps
+The script still needs some work on the next:
+ * Prepare and configure automatically the Reverse DNS Zone
+ * Make it multi-platform to use it in CentOS/RedHat, Suse and Ubuntu 12.04
+ * Make it Multi-Server, to install in each server only the rol that selects (LDAP, Mailbox, MTA, PROXY, UI)
