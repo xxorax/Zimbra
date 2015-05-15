@@ -1,7 +1,7 @@
 # Zimbra
 In this Repository you will find different Zimbra Scripts.
 
-##What is the installZimbra&DNS_Server_Single-Server Script
+##What is the ZimbraEasyInstall
 This Script install and configures bind9 with the domain and IP that is defined while invoke the command. After that the Scripts prepare the keystroke script with a default installation of Zimbra Collaboration 8.6 (without dnscache) and the config.defaults script, using the domain, IP and password that is defined while invoke the command. Once everything is ready the Script download the latest version of Zimbra Collaboration 8.6, uncompress it and install it using the keystrokes script and the config script.
 
 ##Advantages of use the Script
@@ -11,11 +11,11 @@ This Script install and configures bind9 with the domain and IP that is defined 
  * Good for a quick Zimbra Preview
 
 ##Usage and Example
-The installZimbra&DNS_Server_Single-Server Script is aeasy way to install Zimbra Collaboration, without be worry of the DNS configuration, OS depencies, etc. Just execute it and after a few minutes have Zimbra up and running.
+The ZimbraEasyInstall Script is an easy way to install Zimbra Collaboration, without be worry of the DNS configuration, OS depencies, etc. Just execute it and after a few minutes have Zimbra up and running.
 
 Just run the Script adding the TLD domain for your Zimbra Collaboration server, the IP of the DNS server (usually will be the same of the server, but instead you are using different eth interfaces), and add the password for the Zimbra Collaboration server. 
 ```bash
-root@zimbramail:/home/oper# ./installZimbra\&DNS_Server_Single-Server zimbralab.local 192.168.211.40 Zimbra2015
+root@zimbramail:/home/oper# ./ZimbraEasyInstall zimbralab.local 192.168.211.40 Zimbra2015
  
 ```
 ##Access to the Web Client and Admin Console
