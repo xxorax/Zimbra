@@ -28,7 +28,7 @@ RUN apt-get update \
     unzip pax sysstat sqlite3 wget \
     && echo "Creating a tmp folder, and downloading Zimbra Collaboration 8.6" \
     && mkdir /tmp/zcs && cd /tmp/zcs \
-    && wget -O- https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
+    && wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 
 ## Building and adding the Scripts keystrokes and the config.defaults
 ADD installZimbra-keystrokes /tmp/zcs/installZimbra-keystrokes
