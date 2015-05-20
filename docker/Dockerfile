@@ -38,9 +38,7 @@ ADD installZimbraScript /tmp/zcs/installZimbraScript
 ## Install Zimbra Collaboration
 RUN echo "Installing Zimbra Collaboration, just the Software" \
     && cd /tmp/zcs/ && tar xzvf zcs-* \
-    && cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes \
-    && echo "Installing Zimbra Collaboration, time to inject the configuration" \
-    && /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/config.defaults
+    && cd /tmp/zcs/zcs-* && ./install.sh -s --platform-override /tmp/zcs/installZimbraScript < /tmp/zcs/installZimbra-keystrokes 
 
 VOLUME ["/opt/zimbra"]
 
