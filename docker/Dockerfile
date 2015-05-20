@@ -7,7 +7,8 @@ FROM ubuntu:14.04
 MAINTAINER Jorge de la Cruz <jorgedlcruz@gmail.com>
 
 ## Installing the DNS Server##
-RUN dns.sh
+ADD dns.sh /dns.sh
+CMD ["/dns.sh"]
 
 ##Install the Zimbra Collaboration OS dependencies and server ##
 RUN apt-get update
@@ -147,6 +148,6 @@ EXPOSE 8080
 EXPOSE 8443
 EXPOSE 7071
 
-ADD start.sh
+ADD start.sh /start.sh
 
-CMD ["/bin/bash"]
+CMD ["/start.sh"]
