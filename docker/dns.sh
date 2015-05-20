@@ -27,3 +27,19 @@ imap     IN      A      $2
 imap4     IN      A      $2
 smtp     IN      A      $2
 EOF
+cat <<EOF >>named.conf.options
+options {
+directory "/var/cache/bind";
+
+listen-on { 127.0.0.1; }; # ns1 private IP address - listen on private network only
+allow-transfer { none; }; # disable zone transfers by default
+
+forwarders {
+8.8.8.8;
+8.8.4.4;
+};
+auth-nxdomain no; # conform to RFC1035
+#listen-on-v6 { any; };
+
+};
+EOF
