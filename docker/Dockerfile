@@ -22,7 +22,7 @@ RUN sudo service bind9 restart
 
 ##Install the Zimbra Collaboration OS dependencies and server ##
 RUN apt-get update \
-    && echo "Download and install Zimbra Collaboration dependencies"
+    && echo "Download and install Zimbra Collaboration dependencies" \
     && sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 \
     libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf \
     unzip pax sysstat sqlite3 wget \
