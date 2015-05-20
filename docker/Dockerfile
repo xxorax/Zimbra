@@ -15,7 +15,7 @@ RUN echo "Installing DNS Server" \
     && mv /etc/default/bind9.new /etc/default/bind9 \
     && rm /etc/bind/named.conf.options
     
-ADD named.con.options /etc/bind/named.conf.options
+ADD named.conf.options /etc/bind/named.conf.options
 ADD named.conf.local /etc/bind/named.conf.local
 ADD db.* /etc/bind/
 RUN sudo service bind9 restart 
