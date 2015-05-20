@@ -30,6 +30,7 @@ auth-nxdomain no; # conform to RFC1035
 };
 EOF
 ADD named.conf.local /etc/bind/named.conf.local
+ADD db.* /etc/bind/
 RUN sudo service bind9 restart
 
 ##Install the Zimbra Collaboration OS dependencies and server ##

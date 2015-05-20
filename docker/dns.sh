@@ -6,8 +6,8 @@ zone "$1" {
 };
 EOF
 
-touch /etc/bind/db.$1
-cat <<EOF >/etc/bind/db.$1
+touch db.$1
+cat <<EOF >db.$1
 \$TTL  604800
 @      IN      SOA    ns1.$1. root.localhost. (
                               2        ; Serial
