@@ -13,7 +13,7 @@ CMD ["/dns.sh"]
 ##Install the Zimbra Collaboration OS dependencies and server ##
 RUN apt-get update
 RUN echo "Download and install Zimbra Collaboration dependencies"
-RUN sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax sysstat sqlite3
+RUN sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax sysstat sqlite3 wget
 RUN echo "Creating a tmp folder, and downloading Zimbra Collaboration 8.6"
 RUN mkdir /tmp/zcs && cd /tmp/zcs && wget -O- https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz 
 RUN echo "Creating the keystrokes script for a silent Zimbra install, without dnscache"
