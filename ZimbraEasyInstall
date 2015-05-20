@@ -5,7 +5,7 @@ sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
 echo "Configuring DNS Server"
 sed "s/-u/-4 -u/g" /etc/default/bind9 > /etc/default/bind9.new
 mv /etc/default/bind9.new /etc/default/bind9
-HOSTNAME=$(hostname)
+HOSTNAME=$(hostname -a)
 rm /etc/bind/named.conf.options
 cat <<EOF >>/etc/bind/named.conf.options
 options {
