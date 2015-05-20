@@ -7,13 +7,14 @@ FROM ubuntu:14.04
 MAINTAINER Jorge de la Cruz <jorgedlcruz@gmail.com>
 
 RUN echo 'zimbra01' > /etc/hostname
-## Installing the DNS Server##
+## Installing the DNS Server ##
 RUN echo "Installing DNS Server" \
     && sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc \
     && echo "Configuring DNS Server" \
     && sed "s/-u/-4 -u/g" /etc/default/bind9 > /etc/default/bind9.new \
     && mv /etc/default/bind9.new /etc/default/bind9 \
-    && rm /etc/bind/named.conf.options /*
+    && rm /etc/bind/named.conf.options
+    
 ADD named.con.options /etc/bind/named.conf.options
 ADD named.conf.local /etc/bind/named.conf.local
 ADD db.* /etc/bind/
@@ -27,7 +28,7 @@ RUN apt-get update \
     unzip pax sysstat sqlite3 wget \
     && echo "Creating a tmp folder, and downloading Zimbra Collaboration 8.6" \
     && mkdir /tmp/zcs && cd /tmp/zcs \
-    && wget -O- https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz /*
+    && wget -O- https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 
 ## Building and adding the Scripts keystrokes and the config.defaults
 ADD installZimbra-keystrokes /tmp/zcs/installZimbra-keystrokes
@@ -38,7 +39,7 @@ RUN echo "Installing Zimbra Collaboration, just the Software" \
     && cd /tmp/zcs/ && tar xzvf zcs-* \
     && cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes \
     && echo "Installing Zimbra Collaboration, time to inject the configuration" \
-    && /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/config.defaults /*
+    && /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/config.defaults
 
 VOLUME ["/opt/zimbra"]
 
