@@ -3,9 +3,9 @@ echo
 IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
-RANDOMHAM=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-RANDOMSPAM=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
-RANDMONVIRUS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+RANDOMHAM=$(date | md5sum | cut -c -8)
+RANDOMSPAM=$(date | md5sum | cut -c -8)
+RANDMONVIRUS=$(date | md5sum | cut -c -8)
 ## Installing the DNS Server ##
 echo "Installing DNS Server"
 sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
@@ -65,6 +65,7 @@ sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1
 
 ## Building and adding the Scripts keystrokes and the config.defaults
 touch /tmp/zcs/installZimbraScript
+
 cat <<EOF >/tmp/zcs/installZimbraScript
 AVDOMAIN="$DOMAIN"
 AVUSER="admin@$DOMAIN"
@@ -139,7 +140,7 @@ mailboxd_keystore="/opt/zimbra/mailboxd/etc/keystore"
 mailboxd_keystore_password="$PASSWORD"
 mailboxd_server="jetty"
 mailboxd_truststore="/opt/zimbra/java/jre/lib/security/cacerts"
-mailboxd_truststore_password="changeit"
+mailboxd_truststore_password="$PASSWORD"
 postfix_mail_owner="postfix"
 postfix_setgid_group="postdrop"
 ssl_default_digest="sha256"
@@ -157,7 +158,9 @@ zimbraWebProxy="FALSE"
 zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
+
 EOF 
+
 touch /tmp/zcs/installZimbra-keystrokes
 cat <<EOF >/tmp/zcs/installZimbra-keystrokes
 y
