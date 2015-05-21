@@ -64,8 +64,23 @@ echo "Download and install Zimbra Collaboration dependencies"
 sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax sysstat sqlite3
 
 ## Building and adding the Scripts keystrokes and the config.defaults
-touch /tmp/zcs/installZimbraScript
+touch /tmp/zcs/installZimbra-keystrokes
+cat <<EOF >/tmp/zcs/installZimbra-keystrokes
+y
+y
+y
+y
+n
+y
+y
+y
+y
+y
+y
+y
+EOF
 
+touch /tmp/zcs/installZimbraScript
 cat <<EOF >/tmp/zcs/installZimbraScript
 AVDOMAIN="$DOMAIN"
 AVUSER="admin@$DOMAIN"
@@ -158,24 +173,7 @@ zimbraWebProxy="FALSE"
 zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
-
 EOF 
-
-touch /tmp/zcs/installZimbra-keystrokes
-cat <<EOF >/tmp/zcs/installZimbra-keystrokes
-y
-y
-y
-y
-n
-y
-y
-y
-y
-y
-y
-y
-EOF
 
 ##Install the Zimbra Collaboration ##
 echo "Downloading Zimbra Collaboration 8.6"
