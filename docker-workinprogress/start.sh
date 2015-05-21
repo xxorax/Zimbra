@@ -34,7 +34,3 @@ echo "Installing Zimbra Collaboration just the Software"
 cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes
 echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/installZimbraScript
-/etc/init.d/sshd start
-/etc/init.d/sshd stop
-su -c "/opt/zimbra/bin/zmcontrol restart" zimbra
-exec /usr/sbin/sshd -D -e 
