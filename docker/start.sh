@@ -156,7 +156,7 @@ mailboxd_keystore="/opt/zimbra/mailboxd/etc/keystore"
 mailboxd_keystore_password="$PASSWORD"
 mailboxd_server="jetty"
 mailboxd_truststore="/opt/zimbra/java/jre/lib/security/cacerts"
-mailboxd_truststore_password="$PASSWORD"
+mailboxd_truststore_password="changeit"
 postfix_mail_owner="postfix"
 postfix_setgid_group="postdrop"
 ssl_default_digest="sha256"
@@ -179,7 +179,7 @@ EOF
 ##Install the Zimbra Collaboration ##
 echo "Downloading Zimbra Collaboration 8.6"
 cd /tmp/zcs 
-wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
+wget https://files.zimbra.com/downloads/8.6.0_GA/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 tar xzvf zcs-*
 echo "Installing Zimbra Collaboration just the Software"
 cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes
