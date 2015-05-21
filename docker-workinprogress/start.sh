@@ -78,7 +78,6 @@ y
 y
 y
 y
-
 EOF
 
 touch /tmp/zcs/installZimbraScript
@@ -174,7 +173,7 @@ zimbraWebProxy="FALSE"
 zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
-EOF 
+EOF
 
 ##Install the Zimbra Collaboration ##
 echo "Downloading Zimbra Collaboration 8.6"
