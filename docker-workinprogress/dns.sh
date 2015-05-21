@@ -31,7 +31,7 @@ cat <<EOF >>named.conf.options
 options {
 directory "/var/cache/bind";
 
-listen-on { 127.0.0.1; }; # ns1 private IP address - listen on private network only
+listen-on { $2; }; # ns1 private IP address - listen on private network only
 allow-transfer { none; }; # disable zone transfers by default
 
 forwarders {
