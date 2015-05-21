@@ -9,7 +9,7 @@ RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMVIRUS=$(date +%s|sha256sum|base64|head -c 10)
 ## Installing the DNS Server ##
 echo "Installing DNS Server"
-sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
+sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc dnsutils
 echo "Configuring DNS Server"
 sed "s/-u/-4 -u/g" /etc/default/bind9 > /etc/default/bind9.new
 mv /etc/default/bind9.new /etc/default/bind9
@@ -18,7 +18,7 @@ cat <<EOF >>/etc/bind/named.conf.options
 options {
 directory "/var/cache/bind";
 
-listen-on { $CONTAINERIP; }; # ns1 private IP address - listen on private network only
+listen-on { 127.0.0.1; }; # ns1 private IP address - listen on private network only
 allow-transfer { none; }; # disable zone transfers by default
 
 forwarders {
