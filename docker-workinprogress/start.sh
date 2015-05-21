@@ -59,9 +59,6 @@ sudo service bind9 restart
 apt-get update
 echo "Download and install Zimbra Collaboration dependencies"
 sudo apt-get install -y netcat-openbsd sudo libidn11 libpcre3 libgmp10 libexpat1 libstdc++6 libperl5.18 libaio1 resolvconf unzip pax sysstat sqlite3
-echo "Download Zimbra Collaboration 8.6"
-cd /tmp/zcs 
-wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 
 ## Building and adding the Scripts keystrokes and the config.defaults
 touch /tmp/zcs/installZimbraScript
@@ -175,6 +172,8 @@ y
 EOF
 ##Install the Zimbra Collaboration ##
 echo "Downloading Zimbra Collaboration 8.6"
+cd /tmp/zcs 
+wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 cd /tmp/zcs && tar xzvf zcs-*
 echo "Installing Zimbra Collaboration just the Software"
 cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes
