@@ -26,8 +26,6 @@ EXPOSE 8443
 EXPOSE 7071
 
 RUN mkdir /tmp/zcs
-ADD dns.sh /tmp/zcs/dns.sh
-ADD start.sh /tmp/zcs/createInstallFile.sh
 ADD start.sh /tmp/zcs/start.sh
 
 CMD ["/bin/bash", "/tmp/zcs/start.sh"]
