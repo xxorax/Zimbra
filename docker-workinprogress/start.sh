@@ -1,11 +1,11 @@
 #!/bin/sh
 echo 
-IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+CONTAINERIP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
-RANDOMHAM=$(date | md5sum | cut -c -8)
-RANDOMSPAM=$(date | md5sum | cut -c -8)
-RANDMONVIRUS=$(date | md5sum | cut -c -8)
+RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
+RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
+RANDOMVIRUS=$(date +%s|sha256sum|base64|head -c 10)
 ## Installing the DNS Server ##
 echo "Installing DNS Server"
 sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
@@ -17,7 +17,7 @@ cat <<EOF >>/etc/bind/named.conf.options
 options {
 directory "/var/cache/bind";
 
-listen-on { $IP; }; # ns1 private IP address - listen on private network only
+listen-on { $CONTAINERIP; }; # ns1 private IP address - listen on private network only
 allow-transfer { none; }; # disable zone transfers by default
 
 forwarders {
@@ -46,15 +46,15 @@ cat <<EOF >/etc/bind/db.$DOMAIN
                         604800 )      ; Negative Cache TTL
 ;
 @     IN      NS      ns1.$DOMAIN.
-@     IN      A      $IP
+@     IN      A      $CONTAINERIP
 @     IN      MX     10     $HOSTNAME.$DOMAIN.
-$HOSTNAME     IN      A      $IP
-ns1     IN      A      $IP
-mail     IN      A      $IP
-pop3     IN      A      $IP
-imap     IN      A      $IP
-imap4     IN      A      $IP
-smtp     IN      A      $IP
+$HOSTNAME     IN      A      $CONTAINERIP
+ns1     IN      A      $CONTAINERIP
+mail     IN      A      $CONTAINERIP
+pop3     IN      A      $CONTAINERIP
+imap     IN      A      $CONTAINERIP
+imap4     IN      A      $CONTAINERIP
+smtp     IN      A      $CONTAINERIP
 EOF
 sudo service bind9 restart 
 
@@ -145,7 +145,7 @@ UIWEBAPPS="yes"
 UPGRADE="yes"
 USESPELL="yes"
 VERSIONUPDATECHECKS="TRUE"
-VIRUSQUARANTINE="virus-quarantine.RANDMONVIRUS@$DOMAIN"
+VIRUSQUARANTINE="virus-quarantine.$RANDOMVIRUS@$DOMAIN"
 ZIMBRA_REQ_SECURITY="yes"
 ldap_bes_searcher_password="$PASSWORD"
 ldap_dit_base_dn_config="cn=zimbra"
@@ -163,7 +163,7 @@ zimbraFeatureBriefcasesEnabled="Enabled"
 zimbraFeatureTasksEnabled="Enabled"
 zimbraIPMode="ipv4"
 zimbraMailProxy="FALSE"
-zimbraMtaMyNetworks="127.0.0.0/8 $IP/24 [::1]/128 [fe80::]/64"
+zimbraMtaMyNetworks="127.0.0.0/8 $CONTAINERIP/24 [::1]/128 [fe80::]/64"
 zimbraPrefTimeZoneId="America/Los_Angeles"
 zimbraReverseProxyLookupTarget="TRUE"
 zimbraVersionCheckNotificationEmail="admin@$DOMAIN"
