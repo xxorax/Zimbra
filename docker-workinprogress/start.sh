@@ -10,15 +10,30 @@ echo "Configuring DNS Server"
 sed "s/-u/-4 -u/g" /etc/default/bind9 > /etc/default/bind9.new
 mv /etc/default/bind9.new /etc/default/bind9
 rm /etc/bind/named.conf.options
-cat <<EOF >>named.conf.local
+cat <<EOF >>/etc/bind/named.conf.options
+options {
+directory "/var/cache/bind";
+
+listen-on { $IP; }; # ns1 private IP address - listen on private network only
+allow-transfer { none; }; # disable zone transfers by default
+
+forwarders {
+8.8.8.8;
+8.8.4.4;
+};
+auth-nxdomain no; # conform to RFC1035
+#listen-on-v6 { any; };
+
+};
+EOF
+cat <<EOF >>/etc/bind/named.conf.local
 zone "$DOMAIN" {
         type master;
         file "/etc/bind/db.$DOMAIN";
 };
 EOF
-
-touch db.$DOMAIN
-cat <<EOF >db.$DOMAIN
+touch /etc/bind/db.$DOMAIN
+cat <<EOF >/etc/bind/db.$DOMAIN
 \$TTL  604800
 @      IN      SOA    ns1.$DOMAIN. root.localhost. (
                               2        ; Serial
@@ -38,22 +53,6 @@ imap     IN      A      $IP
 imap4     IN      A      $IP
 smtp     IN      A      $IP
 EOF
-cat <<EOF >>named.conf.options
-options {
-directory "/var/cache/bind";
-
-listen-on { $IP; }; # ns1 private IP address - listen on private network only
-allow-transfer { none; }; # disable zone transfers by default
-
-forwarders {
-8.8.8.8;
-8.8.4.4;
-};
-auth-nxdomain no; # conform to RFC1035
-#listen-on-v6 { any; };
-
-};
-EOF
 sudo service bind9 restart 
 
 ##Install the Zimbra Collaboration OS dependencies and Zimbra package ##
@@ -65,7 +64,9 @@ cd /tmp/zcs
 wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
 
 ## Building and adding the Scripts keystrokes and the config.defaults
-cat <<EOF >installZimbraScript
+touch /tmp/zcs/installZimbraScript
+touch /tmp/zcs/installZimbra-keystrokes
+cat <<EOF >/tmp/zcs/installZimbraScript
 AVDOMAIN="$DOMAIN"
 AVUSER="admin@$DOMAIN"
 CREATEADMIN="admin@$DOMAIN"
@@ -158,7 +159,7 @@ zimbra_ldap_userdn="uid=zimbra,cn=admins,cn=zimbra"
 zimbra_require_interprocess_security="1"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
 EOF 
-cat <<EOF >installZimbra-keystrokes
+cat <<EOF >/tmp/zcs/installZimbra-keystrokes
 y
 y
 y
