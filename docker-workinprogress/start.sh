@@ -3,6 +3,9 @@ echo
 IP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
+RANDOMHAM=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+RANDOMSPAM=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
+RANDMONVIRUS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1)
 ## Installing the DNS Server ##
 echo "Installing DNS Server"
 sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
@@ -120,13 +123,13 @@ SNMPTRAPHOST="$HOSTNAME.$DOMAIN"
 SPELLURL="http://$HOSTNAME.$DOMAIN:7780/aspell.php"
 STARTSERVERS="yes"
 SYSTEMMEMORY="3.8"
-TRAINSAHAM="ham.ttp7f9cwte@$DOMAIN"
-TRAINSASPAM="spam.nltbo_u3@$DOMAIN"
+TRAINSAHAM="ham.$RANDMONHAM@$DOMAIN"
+TRAINSASPAM="spam.$RANDMONSPAM@$DOMAIN"
 UIWEBAPPS="yes"
 UPGRADE="yes"
 USESPELL="yes"
 VERSIONUPDATECHECKS="TRUE"
-VIRUSQUARANTINE="virus-quarantine.46arq7z7yi@$DOMAIN"
+VIRUSQUARANTINE="virus-quarantine.RANDMONVIRUS@$DOMAIN"
 ZIMBRA_REQ_SECURITY="yes"
 ldap_bes_searcher_password="$PASSWORD"
 ldap_dit_base_dn_config="cn=zimbra"
@@ -170,15 +173,17 @@ y
 y
 y
 EOF
+
 ##Install the Zimbra Collaboration ##
 echo "Downloading Zimbra Collaboration 8.6"
 cd /tmp/zcs 
 wget http://192.168.211.1:8000/zcs-8.6.0_GA_1153.UBUNTU14_64.20141215151116.tgz
-cd /tmp/zcs && tar xzvf zcs-*
+tar xzvf zcs-*
 echo "Installing Zimbra Collaboration just the Software"
 cd /tmp/zcs/zcs-* && ./install.sh -s < /tmp/zcs/installZimbra-keystrokes
 echo "Installing Zimbra Collaboration injecting the configuration"
 /opt/zimbra/libexec/zmsetup.pl -c /tmp/zcs/installZimbraScript
+
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
 fi
