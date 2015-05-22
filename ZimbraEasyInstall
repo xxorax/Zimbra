@@ -1,4 +1,9 @@
 #!/bin/bash
+## Preparing all the variables like IP, Hostname, etc, all of them from the container
+RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
+RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
+RANDOMVIRUS=$(date +%s|sha256sum|base64|head -c 10)
+
 #Install a DNS Server and Zimbra Collaboration 8.6
 echo "Installing DNS Server"
 sudo apt-get update && sudo sudo apt-get install -y bind9 bind9utils bind9-doc
@@ -114,13 +119,13 @@ SNMPTRAPHOST="$HOSTNAME.$1"
 SPELLURL="http://$HOSTNAME.$1:7780/aspell.php"
 STARTSERVERS="yes"
 SYSTEMMEMORY="3.8"
-TRAINSAHAM="ham.ttp7f9cwte@$1"
-TRAINSASPAM="spam.nltbo_u3@$1"
+TRAINSAHAM="ham.$RANDOMHAM@$1"
+TRAINSASPAM="spam.$RANDOMSPAM@$1"
 UIWEBAPPS="yes"
 UPGRADE="yes"
 USESPELL="yes"
 VERSIONUPDATECHECKS="TRUE"
-VIRUSQUARANTINE="virus-quarantine.46arq7z7yi@$1"
+VIRUSQUARANTINE="virus-quarantine.$RANDOMVIRUS@$1"
 ZIMBRA_REQ_SECURITY="yes"
 ldap_bes_searcher_password="$3"
 ldap_dit_base_dn_config="cn=zimbra"
